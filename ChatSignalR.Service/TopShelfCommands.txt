@@ -1,0 +1,4 @@
+﻿MyService.exe install
+MyService.exe uninstall
+net start MyService
+net stop MyService
