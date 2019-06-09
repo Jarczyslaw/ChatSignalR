@@ -97,6 +97,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TODO.txt" />
     <Content Include="TopShelfCommands.txt" />
     <None Include="App.config" />
     <Content Include="NLog.config">

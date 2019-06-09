@@ -1,0 +1,5 @@
+﻿https://stackoverflow.com/questions/11140164/signalr-console-app-example/15620853
+
+add console client
+add configration without owin
+rename myHub
