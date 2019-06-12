@@ -101,7 +101,7 @@
     <Compile Include="SystemServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="readme.txt" />
+    <Content Include="notes.txt" />
     <Content Include="TopShelfCommands.txt" />
     <None Include="App.config" />
     <Content Include="NLog.config">
