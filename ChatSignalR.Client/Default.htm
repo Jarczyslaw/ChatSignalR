@@ -32,7 +32,7 @@
             $.connection.hub.url = "http://localhost:8090/signalr";
 
             // Declare a proxy to reference the hub.
-            var chat = $.connection.myHub;
+            let chat = $.connection.chatHub;
 
             // Create a function that the hub can call to broadcast messages.
             chat.client.addMessage = function (name, message) {
