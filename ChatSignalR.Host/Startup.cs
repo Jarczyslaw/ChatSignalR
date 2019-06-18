@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin.Cors;
 using Owin;
 
-namespace ChatSignalR.Service
+namespace ChatSignalR.Host
 {
     internal class Startup
     {

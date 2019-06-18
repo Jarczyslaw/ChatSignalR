@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ChatSignalR.Service
+namespace ChatSignalR.Host
 {
     public class PingTask
     {

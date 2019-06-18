@@ -1,4 +1,4 @@
-﻿namespace ChatSignalR.Service
+﻿namespace TopShelfServices
 {
     public interface ISystemService
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Topshelf;
 
-namespace ChatSignalR.Service
+namespace TopShelfServices
 {
     public class ServiceRunner<T> where T : class, ISystemService, new()
     {

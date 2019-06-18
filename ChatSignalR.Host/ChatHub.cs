@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
-namespace ChatSignalR.Service
+namespace ChatSignalR.Host
 {
     public class ChatHub : Hub
     {

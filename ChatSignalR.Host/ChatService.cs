@@ -1,11 +1,12 @@
-﻿using ChatSignalR.Service;
+﻿using ChatSignalR.Host;
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
 using System;
+using TopShelfServices;
 
 [assembly: OwinStartup(typeof(Startup))]
 
-namespace ChatSignalR.Service
+namespace ChatSignalR.Host
 {
     public class ChatService : SystemServiceBase
     {
@@ -18,13 +19,13 @@ namespace ChatSignalR.Service
             ping.Start(() =>
             {
                 ChatHub.HubClients.All.addMessage("[SERVER]", $"Ping from server at {DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss")}");
-                log.InfoFormat("Ping sent!");
+                LogInfo("Ping sent!");
             });
         }
 
         public override void OnStop()
         {
-            log.InfoFormat($"{serviceName} stopping...");
+            LogInfo($"{serviceName} stopping...");
             ping.Stop();
             base.OnStop();
         }

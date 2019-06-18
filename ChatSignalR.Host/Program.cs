@@ -1,4 +1,6 @@
-﻿namespace ChatSignalR.Service
+﻿using TopShelfServices;
+
+namespace ChatSignalR.Host
 {
     internal static class Program
     {
