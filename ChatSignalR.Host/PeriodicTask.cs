@@ -4,35 +4,46 @@ using System.Threading.Tasks;
 
 namespace ChatSignalR.Host
 {
-    public class PingTask
+    public class PeriodicTask
     {
         private CancellationTokenSource cancelletionTokenSource;
         private CancellationToken token;
         private Task task;
 
-        public PingTask()
+        public PeriodicTask()
         {
             cancelletionTokenSource = new CancellationTokenSource();
             token = cancelletionTokenSource.Token;
         }
 
-        public void Start(Action pingAction)
+        public void Start(TimeSpan interval, Action action)
         {
+            Stop();
+
             task = Task.Run(async () =>
             {
+                var stamp = DateTime.Now;
                 while (!token.IsCancellationRequested)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(10))
+                    if (DateTime.Now - stamp >= interval)
+                    {
+                        action();
+                        stamp = DateTime.Now;
+                    }
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(100))
                         .ConfigureAwait(false);
-                    pingAction();
                 }
             }, token);
         }
 
         public void Stop()
         {
-            cancelletionTokenSource.Cancel();
-            task.Wait();
+            if (task != null && cancelletionTokenSource != null)
+            {
+                cancelletionTokenSource.Cancel();
+                task.Wait();
+            }
         }
     }
 }

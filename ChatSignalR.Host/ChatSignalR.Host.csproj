@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatHub.cs" />
-    <Compile Include="PingTask.cs" />
+    <Compile Include="PeriodicTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ChatService.cs" />

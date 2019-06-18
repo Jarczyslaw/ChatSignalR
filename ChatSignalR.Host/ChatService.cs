@@ -10,13 +10,13 @@ namespace ChatSignalR.Host
 {
     public class ChatService : SystemServiceBase
     {
-        private readonly PingTask ping = new PingTask();
+        private readonly PeriodicTask pingTask = new PeriodicTask();
 
         public override void OnStart()
         {
             base.OnStart();
             WebApp.Start("http://localhost:8090");
-            ping.Start(() =>
+            pingTask.Start(TimeSpan.FromSeconds(5), () =>
             {
                 ChatHub.HubClients.All.addMessage("[SERVER]", $"Ping from server at {DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss")}");
                 LogInfo("Ping sent!");
@@ -26,7 +26,7 @@ namespace ChatSignalR.Host
         public override void OnStop()
         {
             LogInfo($"{serviceName} stopping...");
-            ping.Stop();
+            pingTask.Stop();
             base.OnStop();
         }
     }
