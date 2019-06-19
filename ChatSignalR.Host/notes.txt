@@ -9,3 +9,6 @@ TODO:
 	przerobić pingtaska na generycznego taska + usunąć problem z Task.Delay przy sprawdzaniu czy tak się zakończył
 	rename CLient -> WebClient
 	dorobić wysyłkę po naciśnięciu entera
+	dodać unity
+	zaktualizować nugety
+	przetestować taski

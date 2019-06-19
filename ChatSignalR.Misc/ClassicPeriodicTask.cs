@@ -2,19 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ChatSignalR.Host
+namespace ChatSignalR.Misc
 {
-    public class PeriodicTask
+    public class ClassicPeriodicTask : CancellableTask, IPeriodicTask
     {
-        private CancellationTokenSource cancelletionTokenSource;
-        private CancellationToken token;
         private Task task;
-
-        public PeriodicTask()
-        {
-            cancelletionTokenSource = new CancellationTokenSource();
-            token = cancelletionTokenSource.Token;
-        }
 
         public void Start(TimeSpan interval, Action action)
         {
@@ -39,9 +31,9 @@ namespace ChatSignalR.Host
 
         public void Stop()
         {
-            if (task != null && cancelletionTokenSource != null)
+            if (task != null && cancellationTokenSource != null)
             {
-                cancelletionTokenSource.Cancel();
+                cancellationTokenSource.Cancel();
                 task.Wait();
             }
         }

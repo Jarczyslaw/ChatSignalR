@@ -1,4 +1,5 @@
 ﻿using ChatSignalR.Host;
+using ChatSignalR.Misc;
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
 using System;
@@ -10,7 +11,7 @@ namespace ChatSignalR.Host
 {
     public class ChatService : SystemServiceBase
     {
-        private readonly PeriodicTask pingTask = new PeriodicTask();
+        private readonly ClassicPeriodicTask pingTask = new ClassicPeriodicTask();
 
         public override void OnStart()
         {
