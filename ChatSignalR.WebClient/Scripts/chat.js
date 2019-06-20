@@ -2,10 +2,8 @@
     let displayName = '';
     while (true) {
         displayName = prompt('Enter your name:', '');
-        if (displayName != '') {
+        if (displayName != '' && displayName != null) {
             break;
-        } else {
-            alert('Enter valid name');
         }
     }
     $('#displayname').text(displayName);
@@ -31,10 +29,13 @@ function initChat() {
     };
 
     $.connection.hub.start().done(function () {
+        var userName = $('#displayname').text();
+        chat.server.initialize(userName);
+
         let sendHandler = function () {
             let message = $('#message').val();
             if (message != '') {
-                chat.server.send($('#displayname').text(), message);
+                chat.server.send(userName, message);
                 $('#message').val('').focus();
             }
         }

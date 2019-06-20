@@ -8,7 +8,7 @@ namespace ChatSignalR.Host
     public class ChatHub : Hub
     {
         public readonly static IHubConnectionContext<dynamic> HubClients = GlobalHost.ConnectionManager.GetHubContext<ChatHub>().Clients;
-        public readonly static HashSet<string> Connections = new HashSet<string>();
+        public readonly static Dictionary<string, string> Connections = new Dictionary<string, string>();
 
         private void SendServerMessage(string message)
         {
@@ -17,7 +17,7 @@ namespace ChatSignalR.Host
 
         public override Task OnConnected()
         {
-            Connections.Add(Context.ConnectionId);
+            Connections.Add(Context.ConnectionId, string.Empty);
             SendServerMessage($"new connection - {Context.ConnectionId}");
             return base.OnConnected();
         }
@@ -26,7 +26,14 @@ namespace ChatSignalR.Host
         {
             Connections.Remove(Context.ConnectionId);
             SendServerMessage($"connection closed - {Context.ConnectionId}");
+            SendServerMessage($"{Connections[Context.ConnectionId]} disconnected");
             return base.OnDisconnected(stopCalled);
+        }
+
+        public void Initialize(string name)
+        {
+            Connections[Context.ConnectionId] = name;
+            SendServerMessage($"{name} connected");
         }
 
         public void Send(string name, string message)
