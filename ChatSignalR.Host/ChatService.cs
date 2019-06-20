@@ -23,7 +23,7 @@ namespace ChatSignalR.Host
         {
             base.OnStart();
             webApp = WebApp.Start("http://localhost:8090");
-            periodicTask?.Start(TimeSpan.FromSeconds(5), (_) =>
+            periodicTask.Start(TimeSpan.FromSeconds(5), (_) =>
             {
                 ChatHub.HubClients.All.addMessage("[SERVER]", $"Ping from server at {DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss")}");
                 LogInfo("ping sent!");
@@ -33,8 +33,8 @@ namespace ChatSignalR.Host
         public override void OnStop()
         {
             LogInfo("stopping...");
-            webApp?.Dispose();
-            periodicTask?.Stop();
+            webApp.Dispose();
+            periodicTask.Stop();
             base.OnStop();
         }
     }
