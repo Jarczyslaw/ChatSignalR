@@ -8,23 +8,16 @@ namespace ChatSignalR.Misc
     {
         private Task task;
 
-        public void Start(TimeSpan interval, Action action)
+        public void Start(TimeSpan interval, Action<CancellationToken> action)
         {
             Stop();
-
             task = Task.Run(async () =>
             {
-                var stamp = DateTime.Now;
                 while (!token.IsCancellationRequested)
                 {
-                    if (DateTime.Now - stamp >= interval)
-                    {
-                        action();
-                        stamp = DateTime.Now;
-                    }
-
-                    await Task.Delay(TimeSpan.FromMilliseconds(100))
+                    await Task.Delay(interval)
                         .ConfigureAwait(false);
+                    action(token);
                 }
             }, token);
         }

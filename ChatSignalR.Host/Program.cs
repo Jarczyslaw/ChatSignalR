@@ -1,4 +1,6 @@
-﻿using TopShelfServices;
+﻿using ChatSignalR.Misc;
+using TopShelfServices;
+using Unity;
 
 namespace ChatSignalR.Host
 {
@@ -6,8 +8,16 @@ namespace ChatSignalR.Host
     {
         private static void Main()
         {
-            var serviceRunner = new ServiceRunner<ChatService>();
-            serviceRunner.Run();
+            var container = RegisterDependencies();
+            var serviceRunner = new ServiceRunner();
+            serviceRunner.Run(() => container.Resolve<ChatService>());
+        }
+
+        private static IUnityContainer RegisterDependencies()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<IPeriodicTask, ObservablePeriodicTask>();
+            return container;
         }
     }
 }

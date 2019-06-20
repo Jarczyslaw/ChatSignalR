@@ -3,9 +3,10 @@ using Topshelf;
 
 namespace TopShelfServices
 {
-    public class ServiceRunner<T> where T : class, ISystemService, new()
+    public class ServiceRunner
     {
-        public void Run()
+        public void Run<T>(Func<T> constructFunc)
+            where T : class, ISystemService
         {
             HostFactory.Run(serviceConfig =>
             {
@@ -18,7 +19,7 @@ namespace TopShelfServices
 
                 serviceConfig.Service<T>(serviceInstance =>
                 {
-                    serviceInstance.ConstructUsing(() => new T());
+                    serviceInstance.ConstructUsing(constructFunc);
                     serviceInstance.WhenStarted(e => e.OnStart());
                     serviceInstance.WhenPaused(e => e.OnPause());
                     serviceInstance.WhenContinued(e => e.OnContinue());
