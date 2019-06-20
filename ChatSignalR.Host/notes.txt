@@ -5,7 +5,3 @@
 TODO:
 	add console client
 	add configration without owin
-
-	przerobić pingtaska na generycznego taska + usunąć problem z Task.Delay przy sprawdzaniu czy tak się zakończył
-	dorobić wysyłkę po naciśnięciu entera
-	zaktualizować nugety

@@ -25,7 +25,9 @@ namespace ChatSignalR.Host
             webApp = WebApp.Start("http://localhost:8090");
             periodicTask.Start(TimeSpan.FromSeconds(5), (_) =>
             {
-                ChatHub.HubClients.All.addMessage("[SERVER]", $"Ping from server at {DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss")}");
+                var serverTime = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");
+                var usersCount = ChatHub.Connections.Count;
+                ChatHub.HubClients.All.setStatus($"Server time: {serverTime}, current users: {usersCount}");
                 LogInfo("ping sent!");
             });
         }
