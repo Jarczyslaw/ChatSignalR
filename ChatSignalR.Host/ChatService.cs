@@ -22,7 +22,7 @@ namespace ChatSignalR.Host
         public override void OnStart()
         {
             base.OnStart();
-            webApp = WebApp.Start("http://localhost:8090");
+            webApp = WebApp.Start<Startup>("http://localhost:8090");
             periodicTask.Start(TimeSpan.FromSeconds(5), (_) =>
             {
                 var serverTime = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");

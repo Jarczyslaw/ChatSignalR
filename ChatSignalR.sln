@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopShelfServices", "TopShel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatSignalR.Misc", "ChatSignalR.Misc\ChatSignalR.Misc.csproj", "{DD830BD0-1BB0-4C63-87CB-884DE78CBDE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatSignalR.DesktopClient", "ChatSignalR.DesktopClient\ChatSignalR.DesktopClient.csproj", "{C0208FA0-65CE-4C63-9AFF-0A660DD980DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DD830BD0-1BB0-4C63-87CB-884DE78CBDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD830BD0-1BB0-4C63-87CB-884DE78CBDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD830BD0-1BB0-4C63-87CB-884DE78CBDE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0208FA0-65CE-4C63-9AFF-0A660DD980DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0208FA0-65CE-4C63-9AFF-0A660DD980DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0208FA0-65CE-4C63-9AFF-0A660DD980DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0208FA0-65CE-4C63-9AFF-0A660DD980DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
