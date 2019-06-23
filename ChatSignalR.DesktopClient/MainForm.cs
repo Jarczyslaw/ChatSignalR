@@ -5,9 +5,12 @@ namespace ChatSignalR.DesktopClient
 {
     public partial class MainForm : Form
     {
+        private IChatService chatService;
+
         public MainForm()
         {
             InitializeComponent();
+            chatService = new ChatService();
         }
 
         private void GetUserName()
@@ -15,7 +18,7 @@ namespace ChatSignalR.DesktopClient
             string userName;
             while (true)
             {
-                userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", string.Empty);
+                userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", $"TestUser{new Random().Next(1, 9999)}");
                 if (userName == null)
                 {
                     Close();
@@ -32,6 +35,7 @@ namespace ChatSignalR.DesktopClient
         private void MainForm_Shown(object sender, EventArgs e)
         {
             GetUserName();
+            chatService.Connect();
         }
     }
 }

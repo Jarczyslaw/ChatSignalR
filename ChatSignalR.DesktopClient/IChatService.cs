@@ -1,10 +1,12 @@
-﻿namespace ChatSignalR.DesktopClient
+﻿using System.Threading.Tasks;
+
+namespace ChatSignalR.DesktopClient
 {
     public interface IChatService
     {
-        void Connect();
+        Task Connect();
 
-        void Send(string userName, string message);
+        Task<string> Send(string userName, string message);
 
         void Disconnect();
     }
