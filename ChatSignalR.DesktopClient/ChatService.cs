@@ -14,10 +14,9 @@ namespace ChatSignalR.DesktopClient
         public Task Connect()
         {
             connection = new HubConnection("http://localhost:8090/");
-            var connectionTask = connection.Start();
             hubProxy = connection.CreateHubProxy("ChatHub");
             hubProxy.On<string>("setStatus", message => OnStatusReceived?.Invoke(message));
-            return connectionTask;
+            return connection.Start();
         }
 
         public Task<string> Send(string userName, string message)

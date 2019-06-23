@@ -37,6 +37,9 @@
             this.tbDiscussion = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbUserName = new System.Windows.Forms.TextBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSend
@@ -101,7 +104,7 @@
             this.tbDiscussion.Multiline = true;
             this.tbDiscussion.Name = "tbDiscussion";
             this.tbDiscussion.ReadOnly = true;
-            this.tbDiscussion.Size = new System.Drawing.Size(773, 366);
+            this.tbDiscussion.Size = new System.Drawing.Size(773, 353);
             this.tbDiscussion.TabIndex = 6;
             // 
             // label3
@@ -121,11 +124,27 @@
             this.tbUserName.Size = new System.Drawing.Size(195, 20);
             this.tbUserName.TabIndex = 8;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsslStatus
+            // 
+            this.tsslStatus.Name = "tsslStatus";
+            this.tsslStatus.Size = new System.Drawing.Size(0, 17);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tbUserName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbDiscussion);
@@ -138,6 +157,8 @@
             this.Name = "MainForm";
             this.Text = "ChatSignalR";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,6 +175,8 @@
         private System.Windows.Forms.TextBox tbDiscussion;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbUserName;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
     }
 }
 
