@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChatSignalR.DesktopClient
@@ -20,11 +13,19 @@ namespace ChatSignalR.DesktopClient
         private void GetUserName()
         {
             string userName;
-            do
+            while (true)
             {
-                userName = Prompt.ShowDialog("Enter user name:", "ChatSignalR");
+                userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", string.Empty);
+                if (userName == null)
+                {
+                    Close();
+                    return;
+                }
+                else if (userName != string.Empty)
+                {
+                    break;
+                }
             }
-            while (string.IsNullOrEmpty(userName));
             tbUserName.Text = userName;
         }
 
