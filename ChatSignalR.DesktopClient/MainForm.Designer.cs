@@ -50,6 +50,7 @@
             this.btnSend.TabIndex = 0;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
             // tbStatus
             // 
@@ -87,6 +88,7 @@
             this.btnClear.TabIndex = 4;
             this.btnClear.Text = "Clear messages";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // tbMessage
             // 
@@ -104,8 +106,10 @@
             this.tbDiscussion.Multiline = true;
             this.tbDiscussion.Name = "tbDiscussion";
             this.tbDiscussion.ReadOnly = true;
+            this.tbDiscussion.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbDiscussion.Size = new System.Drawing.Size(773, 353);
             this.tbDiscussion.TabIndex = 6;
+            this.tbDiscussion.TabStop = false;
             // 
             // label3
             // 
@@ -156,6 +160,7 @@
             this.Controls.Add(this.btnSend);
             this.Name = "MainForm";
             this.Text = "ChatSignalR";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

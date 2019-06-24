@@ -5,17 +5,17 @@ namespace ChatSignalR.DesktopClient
 {
     public partial class MainForm : Form
     {
-        private IChatService chatService;
+        private readonly IChatService chatService;
+        private string userName;
 
-        public MainForm()
+        public MainForm(IChatService chatService)
         {
             InitializeComponent();
-            chatService = new ChatService();
+            this.chatService = chatService;
         }
 
         private void GetUserName()
         {
-            string userName;
             while (true)
             {
                 userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", $"TestUser{new Random().Next(1, 9999)}");
@@ -30,12 +30,70 @@ namespace ChatSignalR.DesktopClient
                 }
             }
             tbUserName.Text = userName;
+            tbMessage.Focus();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
             GetUserName();
-            chatService.Connect();
+            InitializeChatService();
+        }
+
+        private void InitializeChatService()
+        {
+            try
+            {
+                chatService.Connect();
+                chatService.OnMessageReceived += AppendMessage;
+                chatService.OnStatusReceived += UpdateStatus;
+            }
+            catch (Exception exc)
+            {
+                MessageBoxUtils.ShowException(exc);
+            }
+        }
+
+        private void UpdateStatus(string status)
+        {
+            ThreadUtils.SafeInvoke(this, () => tbStatus.Text = status);
+        }
+
+        private void AppendMessage(string userName, string message)
+        {
+            ThreadUtils.SafeInvoke(this, () => tbDiscussion.Text += userName + ": " + message + Environment.NewLine);
+        }
+
+        private void BtnSend_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(tbMessage.Text))
+            {
+                try
+                {
+                    chatService.Send(userName, tbMessage.Text);
+                    tbMessage.Text = string.Empty;
+                }
+                catch (Exception exc)
+                {
+                    MessageBoxUtils.ShowException(exc);
+                }
+            }
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            tbDiscussion.Text = string.Empty;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                chatService.Disconnect();
+            }
+            catch(Exception exc)
+            {
+                MessageBoxUtils.ShowException(exc);
+            }
         }
     }
 }

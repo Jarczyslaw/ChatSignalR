@@ -9,5 +9,9 @@ namespace ChatSignalR.DesktopClient
         Task<string> Send(string userName, string message);
 
         void Disconnect();
+
+        event StatusReceived OnStatusReceived;
+
+        event MessageReceived OnMessageReceived;
     }
 }
