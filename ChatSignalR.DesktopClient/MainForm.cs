@@ -39,11 +39,11 @@ namespace ChatSignalR.DesktopClient
             InitializeChatService();
         }
 
-        private void InitializeChatService()
+        private async void InitializeChatService()
         {
             try
             {
-                chatService.Connect();
+                await chatService.Connect();
                 chatService.OnMessageReceived += AppendMessage;
                 chatService.OnStatusReceived += UpdateStatus;
             }
