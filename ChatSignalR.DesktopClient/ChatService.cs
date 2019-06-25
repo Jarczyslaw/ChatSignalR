@@ -10,18 +10,27 @@ namespace ChatSignalR.DesktopClient
     public class ChatService : IChatService
     {
         public event StatusReceived OnStatusReceived;
+
         public event MessageReceived OnMessageReceived;
 
         private HubConnection connection;
         private IHubProxy hubProxy;
 
-        public Task Connect()
+        public async Task Connect()
         {
             connection = new HubConnection("http://localhost:8090/");
             hubProxy = connection.CreateHubProxy("ChatHub");
+            await connection.Start().ConfigureAwait(false);
+            if (connection.State == ConnectionState.Connected)
+            {
+                AttachCallbacks();
+            }
+        }
+
+        private void AttachCallbacks()
+        {
             hubProxy.On<string>("setStatus", status => OnStatusReceived?.Invoke(status));
             hubProxy.On<string, string>("addMessage", (userName, message) => OnMessageReceived?.Invoke(userName, message));
-            return connection.Start();
         }
 
         public Task<string> Send(string userName, string message)
@@ -31,7 +40,10 @@ namespace ChatSignalR.DesktopClient
 
         public void Disconnect()
         {
-            connection?.Dispose();
+            if (connection.State == ConnectionState.Connected)
+            {
+                connection.Stop();
+            }
         }
     }
 }
