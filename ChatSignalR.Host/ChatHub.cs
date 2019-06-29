@@ -10,30 +10,34 @@ namespace ChatSignalR.Host
         public readonly static IHubConnectionContext<dynamic> HubClients = GlobalHost.ConnectionManager.GetHubContext<ChatHub>().Clients;
         public readonly static Dictionary<string, string> Connections = new Dictionary<string, string>();
 
-        private void SendServerMessage(string message)
-        {
-            SendMessage("[SERVER]", message);
-        }
+        private string ConnectionId => Context.ConnectionId;
 
         public override Task OnConnected()
         {
-            Connections.Add(Context.ConnectionId, string.Empty);
-            SendServerMessage($"new connection - {Context.ConnectionId}");
+            if (!Connections.ContainsKey(ConnectionId))
+            {
+                Connections.Add(ConnectionId, string.Empty);
+            }
             return base.OnConnected();
-        }
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            Connections.Remove(Context.ConnectionId);
-            SendServerMessage($"connection closed - {Context.ConnectionId}");
-            SendServerMessage($"{Connections[Context.ConnectionId]} disconnected");
-            return base.OnDisconnected(stopCalled);
         }
 
         public void Initialize(string name)
         {
-            Connections[Context.ConnectionId] = name;
-            SendServerMessage($"{name} connected");
+            if (Connections.ContainsKey(ConnectionId))
+            {
+                Connections[ConnectionId] = name;
+                SendServerMessage($"{name} connected (connectionID: {ConnectionId})");
+            }
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            if (Connections.TryGetValue(ConnectionId, out string name))
+            {
+                SendServerMessage($"{name} disconnected (connectionID: {ConnectionId})");
+                Connections.Remove(ConnectionId);
+            }
+            return base.OnDisconnected(stopCalled);
         }
 
         public void SendMessage(string name, string message)
@@ -44,6 +48,11 @@ namespace ChatSignalR.Host
         public void SetStatus(string status)
         {
             Clients.All.setStatus(status);
+        }
+
+        private void SendServerMessage(string message)
+        {
+            SendMessage("[SERVER]", message);
         }
     }
 }
