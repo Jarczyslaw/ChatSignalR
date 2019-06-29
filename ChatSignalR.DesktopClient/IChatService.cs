@@ -4,9 +4,9 @@ namespace ChatSignalR.DesktopClient
 {
     public interface IChatService
     {
-        Task Connect();
+        Task Connect(string userName);
 
-        Task<string> Send(string userName, string message);
+        Task SendMessage(string userName, string message);
 
         void Disconnect();
 

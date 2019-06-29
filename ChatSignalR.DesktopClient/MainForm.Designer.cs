@@ -158,10 +158,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbStatus);
             this.Controls.Add(this.btnSend);
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "ChatSignalR";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

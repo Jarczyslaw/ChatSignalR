@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChatSignalR.DesktopClient
@@ -14,38 +15,50 @@ namespace ChatSignalR.DesktopClient
             this.chatService = chatService;
         }
 
-        private void GetUserName()
+        private bool GetUserName()
         {
             while (true)
             {
                 userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", $"TestUser{new Random().Next(1, 99999)}");
                 if (userName == null)
                 {
-                    Close();
-                    return;
+                    return false;
                 }
                 else if (userName != string.Empty)
                 {
-                    break;
+                    tbUserName.Text = userName;
+                    tbMessage.Focus();
+                    return true;
                 }
             }
-            tbUserName.Text = userName;
-            tbMessage.Focus();
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            GetUserName();
-            InitializeChatService();
-        }
-
-        private async void InitializeChatService()
+        private async void MainForm_Shown(object sender, EventArgs e)
         {
             try
             {
-                await chatService.Connect();
+                if (GetUserName())
+                {
+                    await InitializeChatService();
+                }
+                else
+                {
+                    Close();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBoxUtils.ShowException(exc);
+            }
+        }
+
+        private async Task InitializeChatService()
+        {
+            try
+            {
                 chatService.OnMessageReceived += AppendMessage;
                 chatService.OnStatusReceived += UpdateStatus;
+                await chatService.Connect(userName);
             }
             catch (Exception exc)
             {
@@ -60,17 +73,33 @@ namespace ChatSignalR.DesktopClient
 
         private void AppendMessage(string userName, string message)
         {
-            ThreadUtils.SafeInvoke(this, () => tbDiscussion.Text += userName + ": " + message + Environment.NewLine);
+            ThreadUtils.SafeInvoke(this, () =>
+            {
+                tbDiscussion.Text += userName + ": " + message + Environment.NewLine;
+                ScrollDiscussion();
+            });
         }
 
-        private void BtnSend_Click(object sender, EventArgs e)
+        private void ScrollDiscussion()
+        {
+            tbDiscussion.SelectionStart = tbDiscussion.Text.Length;
+            tbDiscussion.ScrollToCaret();
+        }
+
+        private async void BtnSend_Click(object sender, EventArgs e)
+        {
+            await SendMessage();
+        }
+
+        private async Task SendMessage()
         {
             if (!string.IsNullOrEmpty(tbMessage.Text))
             {
                 try
                 {
-                    chatService.Send(userName, tbMessage.Text);
+                    await chatService.SendMessage(userName, tbMessage.Text);
                     tbMessage.Text = string.Empty;
+                    tbMessage.Focus();
                 }
                 catch (Exception exc)
                 {
@@ -90,9 +119,20 @@ namespace ChatSignalR.DesktopClient
             {
                 chatService.Disconnect();
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 MessageBoxUtils.ShowException(exc);
+            }
+        }
+
+        private async void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                await SendMessage();
+
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
     }
