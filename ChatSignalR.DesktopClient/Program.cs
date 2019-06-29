@@ -1,22 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
 
 namespace ChatSignalR.DesktopClient
 {
-    static class Program
+    internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
+        {
+            var container = new UnityContainer();
+            container.RegisterSingleton<IChatService, ChatService>();
+
+            SetupApplication();
+            Application.Run(container.Resolve<MainForm>());
+        }
+
+        private static void SetupApplication()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(new ChatService()));
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.ThreadException += (s, e) => UnhandledExceptionHandler(e.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (s, e) => UnhandledExceptionHandler((Exception)e.ExceptionObject);
+        }
+
+        private static void UnhandledExceptionHandler(Exception exception)
+        {
+            MessageBoxUtils.ShowException(exception);
         }
     }
 }

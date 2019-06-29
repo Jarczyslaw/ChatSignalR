@@ -3,6 +3,5 @@
 	https://stackoverflow.com/questions/11140164/signalr-console-app-example/15620853
 
 TODO:
-	add Unity to desktop client
 	move ChatHub to separate project
 	finish desktop client

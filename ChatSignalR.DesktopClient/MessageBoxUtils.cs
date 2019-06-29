@@ -12,7 +12,7 @@ namespace ChatSignalR.DesktopClient
 
         public static void ShowException(Exception exception)
         {
-            MessageBox.Show($"Exception occured: {exception.Message + Environment.NewLine + exception.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(exception.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void ShowInfo(string message)
