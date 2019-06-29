@@ -17,7 +17,7 @@ function initChat() {
     $.connection.hub.url = "http://localhost:8090/signalr";
     let chat = $.connection.chatHub;
 
-    chat.client.addMessage = function (name, message) {
+    chat.client.sendMessage = function (name, message) {
         let encodedName = $('<div />').text(name).html();
         let encodedMsg = $('<div />').text(message).html();
         $('#discussion').append('<li><strong>' + encodedName
@@ -35,7 +35,7 @@ function initChat() {
         let sendHandler = function () {
             let message = $('#message').val();
             if (message != '') {
-                chat.server.send(userName, message);
+                chat.server.sendMessage(userName, message);
                 $('#message').val('').focus();
             }
         }

@@ -12,7 +12,7 @@ namespace ChatSignalR.Host
 
         private void SendServerMessage(string message)
         {
-            Send("[SERVER]", message);
+            SendMessage("[SERVER]", message);
         }
 
         public override Task OnConnected()
@@ -36,14 +36,14 @@ namespace ChatSignalR.Host
             SendServerMessage($"{name} connected");
         }
 
-        public void Send(string name, string message)
+        public void SendMessage(string name, string message)
         {
-            Clients.All.addMessage(name, message);
+            Clients.All.sendMessage(name, message);
         }
 
-        public void SendStatus(string message)
+        public void SetStatus(string status)
         {
-            Clients.All.setStatus(message);
+            Clients.All.setStatus(status);
         }
     }
 }

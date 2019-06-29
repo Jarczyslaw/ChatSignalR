@@ -18,7 +18,7 @@ namespace ChatSignalR.DesktopClient
         {
             while (true)
             {
-                userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", $"TestUser{new Random().Next(1, 9999)}");
+                userName = PromptForm.ShowForm("ChatSignalR", "Enter user name:", $"TestUser{new Random().Next(1, 99999)}");
                 if (userName == null)
                 {
                     Close();
